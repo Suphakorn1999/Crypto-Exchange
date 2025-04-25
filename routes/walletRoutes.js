@@ -2,10 +2,10 @@ const express = require('express');
 const router = express.Router();
 const walletController = require('../controllers/walletController');
 
-router.post('/createWallet', walletController.createFiatWallet);
-router.post('/createCryptoWallet', walletController.createCryptoWallet);
-router.post('/createFiatTransaction', walletController.createFiatTransaction);
 router.post('/createTransaction', walletController.createTransaction);
+router.post('/createFiatTransaction', walletController.createFiatTransaction);
+router.post('/CreateCyptoWallet', walletController.CreateCyptoWallet);
+router.post('/CreateFiatWallet', walletController.CreateFiatWallet);
 
 
 module.exports = router;

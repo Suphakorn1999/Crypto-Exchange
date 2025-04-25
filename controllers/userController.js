@@ -8,10 +8,15 @@ exports.createUser = async (req, res) => {
       return res.status(400).json({ message: "All fields are required" });
     }
 
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ message: "Email already in use" });
+    }
+
     const newUser = await User.create({
       username,
       email,
-      password,
+      password: password,
       phone,
     });
 
@@ -24,17 +29,27 @@ exports.createUser = async (req, res) => {
   }
 };
 
-exports.getUserById = async (req, res) => {
+exports.loginUser = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { email, password } = req.body;
 
-    const user = await User.findByPk(id);
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email and password are required" });
+    }
+
+    const user = await User.findOne({ where: { email } });
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
 
-    return res.status(200).json({ user });
+    const isMatch = await User.findOne({ where: { password } });
+
+    if (!isMatch) {
+      return res.status(400).json({ message: "Invalid credentials" });
+    }
+
+    return res.status(200).json({ message: "Login successful", user });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: "Internal server error" });

@@ -2,6 +2,7 @@ const { DataTypes } = require("sequelize");
 const sequelize = require("../config/database");
 const User = require("./User");
 const Coin = require("./Coin");
+const Currency = require("./Currency");
 
 const Orders = sequelize.define(
   "Orders",
@@ -42,6 +43,14 @@ const Orders = sequelize.define(
       type: DataTypes.DOUBLE,
       allowNull: false,
     },
+    currency_id: {
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      references: {
+        model: "currency",
+        key: "currency_id",
+      },
+    },
     status: {
       type: DataTypes.INTEGER, //1 = Open,2 = Completed,3 = Cancelled
       allowNull: false,
@@ -56,8 +65,10 @@ const Orders = sequelize.define(
 
 Orders.belongsTo(User, { foreignKey: "user_id" });
 Orders.belongsTo(Coin, { foreignKey: "coin_id" });
+Orders.belongsTo(Currency, { foreignKey: "currency_id" });
 
 User.hasMany(Orders, { foreignKey: "user_id" });
 Coin.hasMany(Orders, { foreignKey: "coin_id" });
+Currency.hasMany(Orders, { foreignKey: "currency_id" });
 
 module.exports = Orders;
