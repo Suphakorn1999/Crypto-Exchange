@@ -1,0 +1,9 @@
+{
+  "development": {
+    "username": "user",
+    "password": "password",
+    "database": "crypto_exchange",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}
