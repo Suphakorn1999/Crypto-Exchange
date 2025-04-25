@@ -12,8 +12,7 @@ docker-compose down --volumes --remove-orphans
 ```bash
 docker-compose up --build
 ```
-เมื่อ Server รันอยู่ที่ port `5000` แล้ว คุณสามารถทำการรัน Seed ได้
-ขั้นตอนการรัน Seed
+เมื่อ Server รันอยู่ที่ port `5000`
 เมื่อ Server เริ่มต้นแล้วให้ทำการรันคำสั่ง seed:
 ```bash
 npx sequelize-cli db:seed:all
